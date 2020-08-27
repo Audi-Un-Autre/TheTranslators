@@ -7,37 +7,34 @@ from google.cloud import translate_v2 as translate
 
 from botmain import config
 
-class French(commands.Cog):
+class Korean(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f'French Cog is active.')
-        await self.bot.get_channel(config['French Channel ID']).send(self.bot.user.name + ' est maintenant en ligne.')
-        await self.bot.change_presence(status = discord.Status.online, activity = discord.Game(config['F Playing Status']))
+        print(f'Korean Cog is active.')
+        await self.bot.get_channel(config['Korean Channel ID']).send(self.bot.user.name + '은 이제 온라인 상태입니다.')
+        await self.bot.change_presence(status = discord.Status.online, activity = discord.Game(config['K Playing Status']))
 
     # !help command
     @commands.command()
-    async def aide(self, ctx):
-        await ctx.send('Coucou, mon ami ! Je m\'appelle Monsieur et je suis ton bot personnel. ' +
-                        'Ne t\'inquiète pas, pour je suis ici pour t\'aider avec les translations' +
-                        ' entre tous les choses anglais et français.\n\n!french + word: Pour traduire en français.' +
-                        '\n!english + word: Pour traduire en anglais.')
+    async def doum(self, ctx):
+        await ctx.send('In Progress.')
 
     # !french command
     @commands.command()
     @commands.has_role('bulbasoir')
-    async def french(self, ctx, *, text):
+    async def korean(self, ctx, *, text):
         translate_client = translate.Client()
-        target = 'fr'
+        target = 'ko'
         result = translate_client.translate(
             text,
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        await ctx.send('FR: {}'.format(soup))
+        await ctx.send('KO: {}'.format(soup))
 
     # !english command
     @commands.command()
@@ -53,4 +50,4 @@ class French(commands.Cog):
         await ctx.send(u'EN: {}'.format(result['translatedText']))
 
 def setup(bot):
-    bot.add_cog(French(bot))
+    bot.add_cog(Korean(bot))

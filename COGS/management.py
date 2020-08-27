@@ -11,19 +11,15 @@ class Management(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Management cog is active on ' + self.bot.user.name)
-        await self.bot.change_presence(status = discord.Status.idle, activity = discord.Game(config['Playing Status']))
-        await self.bot.get_channel(config['Log Channel ID']).send(self.bot.user.name + ' is now online.')
     
     @commands.Cog.listener()
     # member join notice
     async def on_member_join(self, member):
-        await self.bot.get_channel(config['Log Channel ID']).send(f'{member} has joined the server.')
         await self.bot.get_channel(config['Main Channel ID']).send(f'Greetings, {member} !')
 
     # member leave notice
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        await self.bot.get_channel(config['Log Channel ID']).send(f'{member} has left the server.')
         await self.bot.get_channel(config['Main Channel ID']).send(f'A shame, {member} has left the server.')
 
     # kick
