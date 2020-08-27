@@ -1,13 +1,7 @@
 import discord
 from discord.ext import commands
 
-from ruamel.yaml import YAML
-
-yaml = YAML()
-
-# config file load in
-with open('./config.yml', 'r', encoding = 'utf-8') as file:
-    config = yaml.load(file)
+from botmain import config
 
 class Management(commands.Cog):
     def __init__(self, bot):
@@ -17,7 +11,6 @@ class Management(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Management cog is active on ' + self.bot.user.name)
-        print(self.bot.user.name + f' is now online.')
         await self.bot.change_presence(status = discord.Status.idle, activity = discord.Game(config['Playing Status']))
         await self.bot.get_channel(config['Log Channel ID']).send(self.bot.user.name + ' is now online.')
     
