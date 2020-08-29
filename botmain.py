@@ -14,6 +14,8 @@ yaml = YAML()
 with open('./config.yml', 'r', encoding = 'utf-8') as file:
     config = yaml.load(file)
 
+restrict = config['Admin']
+
 # bot access
 bot = commands.Bot(command_prefix = config['Prefix'])
 bot2 = commands.Bot(command_prefix = config['Prefix'])
@@ -24,13 +26,14 @@ bot.load_extension('COGS.management')
 bot.load_extension('COGS.french')
 bot2.load_extension('COGS.korean')
 bot2.load_extension('COGS.management')
+bot2.load_extension('COGS.formatting')
+bot.load_extension('COGS.formatting')
 
 # !restart command
 @bot.command()
-@commands.has_role('bulbasoir')
+@commands.has_role(restrict)
 async def restart(ctx):
     await ctx.send("Redémarrer en cours . . .")
-    #await bot.close()
     loop.stop()
 
 # run both french and korean bots

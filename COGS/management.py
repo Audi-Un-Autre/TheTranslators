@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from botmain import config
+from botmain import config, restrict
 
 class Management(commands.Cog):
     def __init__(self, bot):
@@ -24,23 +24,23 @@ class Management(commands.Cog):
 
     # kick
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def kick(self, ctx, member : discord.Member, *, reason=None):
         await ctx.invoke(self.bot.get_command('clearchat'), query = 1)
-        await ctx.send(member + ' has been removed from the server. Reason : ' + reason)
+        await ctx.send({member} + ' has been removed from the server. Reason : ' + reason)
         await member.kick(reason=reason)
 
     # ban
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def ban(self, ctx, member : discord.Member, *, reason=None):
         await ctx.invoke(self.bot.get_command('clearchat'), query = 1)
-        await ctx.send(member + ' has been banned from the server. Reason : ' + reason)
+        await ctx.send({member} + ' has been banned from the server. Reason : ' + reason)
         await member.ban(reason=reason)
 
     # !clearchat
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def clearchat(self, ctx, amount:int):
         if amount > 100 or amount <= 0:
             await ctx.send('Error : Please enter a number between 1 - 100.')

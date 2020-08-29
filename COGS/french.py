@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 from google.cloud import translate_v2 as translate
 
-from botmain import config
+from botmain import config, restrict
 
 class French(commands.Cog):
 
@@ -28,7 +28,7 @@ class French(commands.Cog):
 
     # !french command
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def french(self, ctx, *, text):
         translate_client = translate.Client()
         target = 'fr'
@@ -37,11 +37,12 @@ class French(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        await ctx.send('FR: {}'.format(soup))
+        formatter = self.bot.get_cog('Formatting')
+        await formatter.formatTranslation(text, soup, ctx)
 
     # !english command
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def english(self, ctx, *, text):
         translate_client = translate.Client()
         target = 'en'
@@ -50,7 +51,8 @@ class French(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        await ctx.send(u'EN: {}'.format(result['translatedText']))
+        formatter = self.bot.get_cog('Formatting')
+        await formatter.formatTranslation(text, soup, ctx)
 
 def setup(bot):
     bot.add_cog(French(bot))

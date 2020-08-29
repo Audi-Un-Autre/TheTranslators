@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 from google.cloud import translate_v2 as translate
 
-from botmain import config
+from botmain import config, restrict
 
 class Korean(commands.Cog):
 
@@ -21,11 +21,11 @@ class Korean(commands.Cog):
     # !help command
     @commands.command()
     async def doum(self, ctx):
-        await ctx.send('In Progress.')
+        await ctx.send('오 안녕하세요. 뭔가 필요하세요? 봐, 할 일이있어. 내 서비스가 필요하면 입력하여 도움을 요청하십시오.')
 
     # !french command
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def korean(self, ctx, *, text):
         translate_client = translate.Client()
         target = 'ko'
@@ -34,11 +34,12 @@ class Korean(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        await ctx.send('KO: {}'.format(soup))
+        formatter = self.bot.get_cog('Formatting')
+        await formatter.formatTranslation(text, soup, ctx)
 
     # !english command
     @commands.command()
-    @commands.has_role('bulbasoir')
+    @commands.has_role(restrict)
     async def english(self, ctx, *, text):
         translate_client = translate.Client()
         target = 'en'
@@ -47,7 +48,8 @@ class Korean(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        await ctx.send(u'EN: {}'.format(result['translatedText']))
+        formatter = self.bot.get_cog('Formatting')
+        await formatter.formatTranslation(text, soup, ctx)
 
 def setup(bot):
     bot.add_cog(Korean(bot))
