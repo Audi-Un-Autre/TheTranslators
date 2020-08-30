@@ -22,18 +22,27 @@ bot2 = commands.Bot(command_prefix = config['Prefix'])
 key = os.getenv(config['Bot Key'])
 key2 = os.getenv(config['Bot2 Key'])
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv(config['Api Key'])
+
+# french cogs
 bot.load_extension('COGS.management')
 bot.load_extension('COGS.french')
+bot.load_extension('COGS.formatting')
+bot.load_extension('COGS.errorHandling')
+
+# korean cogs
 bot2.load_extension('COGS.korean')
 bot2.load_extension('COGS.management')
 bot2.load_extension('COGS.formatting')
-bot.load_extension('COGS.formatting')
+bot2.load_extension('COGS.errorHandling')
 
 # !restart command
 @bot.command()
 @commands.has_role(restrict)
 async def restart(ctx):
-    await ctx.send("Redémarrer en cours . . .")
+    #await ctx.send("Redémarrer en cours . . .")
+    message = "Redémarrer en cours . . ."
+    messageFormat = bot.get_cog('Formatting')
+    await messageFormat.formatGeneral(ctx, message)
     loop.stop()
 
 # run both french and korean bots

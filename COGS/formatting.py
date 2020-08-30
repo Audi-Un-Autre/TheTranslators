@@ -23,5 +23,13 @@ class Formatting(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @commands.Cog.listener()
+    async def formatGeneral(self, ctx, text):
+        embed = discord.Embed(
+            color = discord.Colour.light_gray()
+        )
+        embed.add_field(name = 'System Message', value = text, inline = True)
+        await ctx.send(embed=embed)
+
 def setup(bot):
     bot.add_cog(Formatting(bot))

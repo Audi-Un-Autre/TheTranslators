@@ -15,13 +15,17 @@ class Korean(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Korean Cog is active.')
-        await self.bot.get_channel(config['Korean Channel ID']).send(self.bot.user.name + '은 이제 온라인 상태입니다.')
+        greeting = self.bot.user.name + '은 이제 온라인 상태입니다.'
+        greet = self.bot.get_cog('Formatting')
+        await greet.formatGeneral(self.bot.get_channel(config['Korean Channel ID']), greeting)
         await self.bot.change_presence(status = discord.Status.online, activity = discord.Game(config['K Playing Status']))
 
     # !help command
     @commands.command()
     async def doum(self, ctx):
-        await ctx.send('오 안녕하세요. 뭔가 필요하세요? 봐, 할 일이있어. 내 서비스가 필요하면 입력하여 도움을 요청하십시오.')
+        commandInfo = ('오 안녕하세요. 뭔가 필요하세요? 봐, 할 일이있어. 내 서비스가 필요하면 입력하여 도움을 요청하십시오.')
+        formatCommand = self.bot.get_cog('Formatting')
+        await formatCommand.formatGeneral(ctx, commandInfo)
 
     # !french command
     @commands.command()
