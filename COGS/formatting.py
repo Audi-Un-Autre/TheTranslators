@@ -1,3 +1,5 @@
+# This cog will format the bot's output before outputting to Discord
+
 import discord
 from discord.ext import commands
 
@@ -9,6 +11,7 @@ class Formatting(commands.Cog):
     async def on_ready(self):
         print(f'Formatting Cog online.')
 
+    # Translation formatting
     @commands.Cog.listener()
     async def formatTranslation(self, request, result, ctx):
         embed = discord.Embed(
@@ -23,8 +26,13 @@ class Formatting(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    # General non-translated formatting
     @commands.Cog.listener()
     async def formatGeneral(self, ctx, text):
+        # if text is a list, parse out brackets, quotes, commas
+        if isinstance(text, list):
+            tempText = '\n'.join(str(x) for x in text)
+            text = tempText
         embed = discord.Embed(
             color = discord.Colour.light_gray()
         )

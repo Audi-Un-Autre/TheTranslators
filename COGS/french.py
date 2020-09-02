@@ -1,3 +1,5 @@
+# French cog will handle all french commands
+
 import discord
 from discord.ext import commands
 
@@ -16,8 +18,7 @@ class French(commands.Cog):
     async def on_ready(self):
         print(f'French Cog is active.')
         greeting = self.bot.user.name + ' est maintenant en ligne.'
-        greet = self.bot.get_cog('Formatting')
-        await greet.formatGeneral(self.bot.get_channel(config['French Channel ID']), greeting)
+        await self.bot.get_cog('Formatting').formatGeneral(self.bot.get_channel(config['French Channel ID']), greeting)
         await self.bot.change_presence(status = discord.Status.online, activity = discord.Game(config['F Playing Status']))
 
     # !help command
@@ -27,8 +28,7 @@ class French(commands.Cog):
                         'Ne t\'inquiète pas, pour je suis ici pour t\'aider avec les translations' +
                         ' entre tous les choses anglais et français.\n\nPour traduire en français:```!french + le mot```' +
                         '\nPour traduire en anglais:```!english + le mot```\n')
-        formatCommand = self.bot.get_cog('Formatting')
-        await formatCommand.formatGeneral(ctx, commandInfo)
+        await self.bot.get_cog('Formatting').formatGeneral(ctx, commandInfo)
 
     # !french command
     @commands.command()
@@ -41,8 +41,7 @@ class French(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        formatter = self.bot.get_cog('Formatting')
-        await formatter.formatTranslation(text, soup, ctx)
+        await self.bot.get_cog('Formatting').formatTranslation(text, soup, ctx)
 
     # !english command
     @commands.command()
@@ -55,8 +54,7 @@ class French(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        formatter = self.bot.get_cog('Formatting')
-        await formatter.formatTranslation(text, soup, ctx)
+        await self.bot.get_cog('Formatting').formatTranslation(text, soup, ctx)
 
 def setup(bot):
     bot.add_cog(French(bot))

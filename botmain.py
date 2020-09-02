@@ -1,3 +1,5 @@
+# Main control of bots
+
 import asyncio
 
 import discord
@@ -19,6 +21,10 @@ restrict = config['Admin']
 # bot access
 bot = commands.Bot(command_prefix = config['Prefix'])
 bot2 = commands.Bot(command_prefix = config['Prefix'])
+
+bot.remove_command('help')
+bot2.remove_command('help')
+
 key = os.getenv(config['Bot Key'])
 key2 = os.getenv(config['Bot2 Key'])
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv(config['Api Key'])
@@ -28,18 +34,19 @@ bot.load_extension('COGS.management')
 bot.load_extension('COGS.french')
 bot.load_extension('COGS.formatting')
 bot.load_extension('COGS.errorHandling')
+bot.load_extension('COGS.help')
 
 # korean cogs
 bot2.load_extension('COGS.korean')
 bot2.load_extension('COGS.management')
 bot2.load_extension('COGS.formatting')
 bot2.load_extension('COGS.errorHandling')
+bot2.load_extension('COGS.help')
 
 # !restart command
 @bot.command()
 @commands.has_role(restrict)
 async def restart(ctx):
-    #await ctx.send("Redémarrer en cours . . .")
     message = "Redémarrer en cours . . ."
     messageFormat = bot.get_cog('Formatting')
     await messageFormat.formatGeneral(ctx, message)

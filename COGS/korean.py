@@ -1,3 +1,5 @@
+# This cog will handle all Korean commands
+
 import discord
 from discord.ext import commands
 
@@ -16,16 +18,14 @@ class Korean(commands.Cog):
     async def on_ready(self):
         print(f'Korean Cog is active.')
         greeting = self.bot.user.name + '은 이제 온라인 상태입니다.'
-        greet = self.bot.get_cog('Formatting')
-        await greet.formatGeneral(self.bot.get_channel(config['Korean Channel ID']), greeting)
+        await self.bot.get_cog('Formatting').formatGeneral(self.bot.get_channel(config['Korean Channel ID']), greeting)
         await self.bot.change_presence(status = discord.Status.online, activity = discord.Game(config['K Playing Status']))
 
     # !help command
     @commands.command()
     async def doum(self, ctx):
         commandInfo = ('오 안녕하세요. 뭔가 필요하세요? 봐, 할 일이있어. 내 서비스가 필요하면 입력하여 도움을 요청하십시오.')
-        formatCommand = self.bot.get_cog('Formatting')
-        await formatCommand.formatGeneral(ctx, commandInfo)
+        await self.bot.get_cog('Formatting').formatGeneral(ctx, commandInfo)
 
     # !french command
     @commands.command()
@@ -38,8 +38,7 @@ class Korean(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        formatter = self.bot.get_cog('Formatting')
-        await formatter.formatTranslation(text, soup, ctx)
+        await self.bot.get_cog('Formatting').formatTranslation(text, soup, ctx)
 
     # !english command
     @commands.command()
@@ -52,8 +51,7 @@ class Korean(commands.Cog):
             target_language = target
         )
         soup = BeautifulSoup(result['translatedText'], 'html.parser')
-        formatter = self.bot.get_cog('Formatting')
-        await formatter.formatTranslation(text, soup, ctx)
+        await self.bot.get_cog('Formatting').formatTranslation(text, soup, ctx)
 
 def setup(bot):
     bot.add_cog(Korean(bot))
