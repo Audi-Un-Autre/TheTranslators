@@ -15,7 +15,7 @@ These two take Google's Translation API and translate words! Yes ... words like 
 I love French. The language. The contemporary pop. The food. Ever since I can remember French is the one language I've always wanted to learn to speak fluently. It's a work in progress. I mean isn't all language a work in progress ^^;
 Ah, but Korean is a different story. I have a friend who loves KDrama and why not help her out with a handy dandy bot that can translate the odd word here and there when she's watching her favourite kdrama.
 
-So then, why not make a bots that can help our language needs ?
+So then, why not make bots that can help our language needs ?
 
 # But wait, is there more ?
 
