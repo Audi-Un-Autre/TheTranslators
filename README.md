@@ -8,7 +8,7 @@ WHEN THEY PLAY MUSIC FOR YOU ?
 ahem.
 
 Well, introducing magical Monsieur and superb Seonsaengnim ! The French and Korean bots.
-These two take Google's Translation API and translate words! Yes ... words like people, place, and things. And sentences. That, too.
+These two take Google's Translation API and translate words! Yes ... words like people, places, and things. And sentences. That, too.
 
 # Inspiration
 
